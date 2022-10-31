@@ -1,0 +1,61 @@
+<h1>Figma To Code Color Audit</h1>
+{[ let brands = ds.allBrands() /]}
+{[ let brandTokenInfo = [] /]}{[ for brand in brands ]}
+    {[ const groups = ds.tokenGroupsOfType("Color", brand.id) /]}
+    {[ let brandTokenData = [] /]}
+    {[ for group in groups ]}
+      {[ const tokens = ds.tokensByGroupId(group.id, brand.id) /]}
+      {[ for token in tokens ]}
+        {[ let tokenGroup = ds.tokenGroupContainingTokenId(token.id) /]}
+        {[ let tokenName = readableVariableName(token, tokenGroup) /]}
+        {[ brandTokenData = brandTokenData.append({ "tokenName": tokenName, "tokenValue": token.value, "tokenGroup": tokenGroup.path }) /]}
+      {[/]}
+    {[/]} 
+    {[ brandTokenInfo = brandTokenInfo.append({ "name": brand.name, "tokens": brandTokenData })  /]}
+{[/]}
+{[ let audits = colorAudit(brandTokenInfo) /]}
+{[ for audit in audits ]}
+    {[ let brand = audit.name /]}
+    {[ let groups = audit.groups /]}
+    <h2>{{ brand }}</h2>
+    <table>
+
+        {[ for group in groups ]}
+            <tr style='background-color: black; color: white;'>
+                <td>
+                    <h3>{{ brand }} - {{ group.groupName }}</h3>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr style="font-weight: bold;">
+            <td>Figma Name</td>
+            <td>Code Name</td>
+            <td>Figma Value</td>
+            <td>Code Value</td>
+            <td>Status</td>
+        </tr>
+            {[ for token in group.tokens ]}
+                <tr>
+                    <td>{{ token.figmaName }}</td>
+                    <td>{{ token.codeName }}</td>
+                    <td>{{ token.figmaValue }}</td>
+                    <td>{{ token.codeValue }}</td>
+                    <td>  
+                        {[ if token.message.equals("Healthy") ]}
+                            <span style="color: #006A25;">
+                                {{ token.message }}
+                            </span><br />
+                        {[ else ]}
+                            <span style="color: #D91400;">
+                                {{ token.message }}
+                            </span><br />
+                        {[/]}
+                    </td>
+                </tr>       
+            {[/]} 
+        {[/]}
+    </table>    
+{[/]}

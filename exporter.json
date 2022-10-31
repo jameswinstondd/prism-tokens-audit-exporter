@@ -1,0 +1,25 @@
+{
+    "id": "com.doordash.prism-tokens-audit",
+    "name": "Prism Tokens Audit",
+    "description": "Prism Tokens Audit",
+    "author": "James Winston",
+    "organization": "DoorDash",
+    "homepage": "https://doordash.com",
+    "source_dir": "src",
+    "version": "1.0.0",
+    "usesBrands": true,
+    "config": {
+        "sources": "sources.json",
+        "output": "output.json",
+        "js": "src/js/helpers.js"
+    },
+    "engines": {
+        "pulsar": "1.0.0",
+        "supernova": "1.0.0"
+    },
+    "tags": [
+        "CSS",
+        "Tokens",
+        "Styles"
+    ]
+}

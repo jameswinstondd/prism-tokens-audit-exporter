@@ -1,0 +1,24 @@
+
+{[ let brandInfo = context /]}
+{[ let brands = ds.allBrands() /]}
+
+<h1>{{ brandInfo.name }}</h1>
+
+{[ for brand in brands ]}
+  {[ if brand.name.equals(brandInfo.name) ]}
+    {[ const groups = ds.tokenGroupsOfType("Color", brand.id) /]}
+    {[ for group in groups ]}
+      {[ const tokens = ds.tokensByGroupId(group.id, brand.id) /]}
+      {[ if group.parent ]}
+        {[ if group.parent.name.equals("Color") ]}
+          <h2>{{ group.name }}</h2>
+        {[/]}
+      {[/]}    
+      {[ for token in tokens ]}
+        {[ let tokenGroup = ds.tokenGroupContainingTokenId(token.id) /]}
+        {[ let tokenName = readableVariableName(token, tokenGroup) /]}
+        {{ tokenName }}<br />
+      {[/]}
+    {[/]}
+  {[/]}   
+{[/]}

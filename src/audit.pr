@@ -1,0 +1,41 @@
+<h1>Figma Token Name Matches Audit</h1>
+{[ let brands = ds.allBrands() /]}
+{[ let brandTokenInfo = [] /]}{[ for brand in brands ]}
+    {[ const groups = ds.tokenGroupsOfType("Color", brand.id) /]}
+    {[ let brandTokenData = [] /]}
+    {[ for group in groups ]}
+      {[ const tokens = ds.tokensByGroupId(group.id, brand.id) /]}
+      {[ for token in tokens ]}
+        {[ let tokenGroup = ds.tokenGroupContainingTokenId(token.id) /]}
+        {[ let tokenName = readableVariableName(token, tokenGroup) /]}
+        {[ brandTokenData = brandTokenData.append(tokenName) /]}
+      {[/]}
+    {[/]} 
+    {[ brandTokenInfo = brandTokenInfo.append({ "name": brand.name, "tokens": brandTokenData })  /]}
+{[/]}
+{[ let audits = auditTokenInfo(brandTokenInfo) /]}
+{[ for audit in audits ]}
+    {[ let brand = audit.name /]}
+    {[ let tokens = audit.tokens /]}
+    <h2>{{ brand }}</h2>
+    <table>
+        {[ for token in tokens ]}
+            <tr>
+                <td>{{ token.tokenName }}</td>
+                <td>
+                    {[ for message in token.messages ]}
+                        {[ if message.equals("Healthy and Matched") ]}
+                            <span style="color: #006A25;">
+                                {{ message }}
+                            </span><br />
+                        {[ else ]}
+                            <span style="color: #D91400;">
+                                {{ message }}
+                            </span><br />
+                        {[/]}
+                    {[/]}
+                </td>
+            </tr>        
+        {[/]}
+    </table>    
+{[/]}

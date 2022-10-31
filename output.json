@@ -1,0 +1,24 @@
+{
+    "blueprints": [
+        {
+            "invoke": "merchant.pr",
+            "write_to": "merchant.html"
+        },
+        {
+            "invoke": "caviar.pr",
+            "write_to": "caviar.html"
+        },
+        {
+            "invoke": "consumer.pr",
+            "write_to": "consumer.html"
+        },
+        {
+            "invoke": "audit.pr",
+            "write_to": "audit.html"
+        },
+        {
+            "invoke": "auditFigmaColorCodeReport.pr",
+            "write_to": "auditFigmaColorCodeReport.html"
+        }
+    ]
+}
